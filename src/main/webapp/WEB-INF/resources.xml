@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <Resource id="jdbc/bjm" type="javax.sql.DataSource">#Sat Sep 20 04:30:57 BST 2025
+jdbcDriver=org.mariadb.jdbc.Driver
+jdbcUrl=jdbc\:mariadb\://localhost\:3306/bjm
+password=Wether@lDr69
+userName=root
+</Resource>
+</resources>
