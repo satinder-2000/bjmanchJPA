@@ -3,16 +3,21 @@ package org.bjm.ejbs;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
+import org.bjm.entities.ForumCategory;
 import org.bjm.entities.LokSabha;
 import org.bjm.entities.State;
+import org.bjm.entities.SurveyCategory;
 import org.bjm.entities.VidhanSabha;
 
 /**
@@ -59,6 +64,81 @@ public class ReferenceDataServiceEjb implements ReferenceDataServiceEjbLocal {
         
         
     }
+    @Override
+    public List<ForumCategory> getForumCategories() {
+        Query query=em.createNamedQuery("ForumCategory.findAll", ForumCategory.class);
+        List<ForumCategory> toReturn=query.getResultList();
+        LOGGER.info(String.format("Count of ForumCategory is %d", toReturn.size()));
+        return toReturn;
+    }
+
+    
+    
+    @Override
+    public List<String> getForumCategoriesAsStrings() {
+        Query query=em.createNamedQuery("ForumCategory.findAll", ForumCategory.class);
+        List<ForumCategory> forumCategories = query.getResultList();
+        Set<String> forumCategoriesSet=new HashSet<>();
+        for (ForumCategory fc: forumCategories){
+            forumCategoriesSet.add(fc.getType());
+        }
+        List<String> toReturn=new ArrayList<>();
+        toReturn.addAll(forumCategoriesSet);
+        LOGGER.info(String.format("Count of ForumCategory as String is %d", toReturn.size()));
+        return toReturn;
+    }
+
+    @Override
+    public List<String> getForumSubCategories(String category) {
+        Query query=em.createNamedQuery("ForumCategory.findByType", ForumCategory.class);
+        query.setParameter(1, category);
+        List<ForumCategory> forumCategories = query.getResultList();
+        Set<String> forumSubCategoriesSet=new HashSet<>();
+        for (ForumCategory fc: forumCategories){
+            forumSubCategoriesSet.add(fc.getSubType());
+        }
+        List<String> toReturn=new ArrayList<>();
+        toReturn.addAll(forumSubCategoriesSet);
+        LOGGER.info(String.format("Count of ForumSubCategory for category %s is %d",category, toReturn.size()));
+        return toReturn;
+    }
+    
+    @Override
+    public List<SurveyCategory> getSurveyCategories() {
+        Query query=em.createNamedQuery("SurveyCategory.findAll", SurveyCategory.class);
+        List<SurveyCategory> toReturn=query.getResultList();
+        LOGGER.info(String.format("Count of SurveyCategory is %d", toReturn.size()));
+        return toReturn;
+    }
+
+    @Override
+    public List<String> getSurveyCategoriesAsStrings() {
+        Query query=em.createNamedQuery("SurveyCategory.findAll", SurveyCategory.class);
+        List<SurveyCategory> surveyCategories = query.getResultList();
+        Set<String> surveyCategoriesSet=new HashSet<>();
+        for (SurveyCategory sc: surveyCategories){
+            surveyCategoriesSet.add(sc.getType());
+        }
+        List<String> toReturn=new ArrayList<>();
+        toReturn.addAll(surveyCategoriesSet);
+        LOGGER.info(String.format("Count of SurveyCategory as String is %d", toReturn.size()));
+        return toReturn;
+    }
+
+    @Override
+    public List<String> getSurveySubCategories(String category) {
+        Query query=em.createNamedQuery("SurveyCategory.findByType", SurveyCategory.class);
+        query.setParameter(1, category);
+        List<SurveyCategory> surveyCategories = query.getResultList();
+        Set<String> surveySubCategoriesSet=new HashSet<>();
+        for (SurveyCategory sc: surveyCategories){
+            surveySubCategoriesSet.add(sc.getSubType());
+        }
+        List<String> toReturn=new ArrayList<>();
+        toReturn.addAll(surveySubCategoriesSet);
+        LOGGER.info(String.format("Count of SurveySubCategory for category %s is %d",category, toReturn.size()));
+        return toReturn;
+    }
 
     public List<State> getAllStates() {
         return allStates;
@@ -77,6 +157,10 @@ public class ReferenceDataServiceEjb implements ReferenceDataServiceEjbLocal {
     public List<VidhanSabha> getVidhanSabhasForState(String code) {
         return vidhanSabhaMap.get(code);
     }
+
+    
+
+    
 
     
 }

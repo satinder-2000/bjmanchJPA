@@ -16,6 +16,10 @@ import jakarta.mail.internet.MimeMessage;
 import jakarta.mail.internet.MimeMultipart;
 import java.util.logging.Logger;
 import org.bjm.entities.Access;
+import org.bjm.entities.Forum;
+import org.bjm.entities.Survey;
+import org.bjm.entities.SurveyFromForum;
+import org.bjm.entities.User;
 
 /**
  *
@@ -29,7 +33,7 @@ public class EmailServiceEjb implements EmailServiceEjbLocal {
     @Resource(mappedName = "java:comp/env/mail/bjm")//Tomee
     private Session session;
     
-     @Resource(name = "webURI")
+    @Resource(name = "webURI")
     private String webURI;
     
     @Resource(name = "createAccessURI")
@@ -111,6 +115,168 @@ public class EmailServiceEjb implements EmailServiceEjbLocal {
             Transport.send(mimeMessage);
             LOGGER.info("Email sent successfully....");
         }catch(MessagingException ex){
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendForumCreatedEmail(Access access, Forum forum) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(access.getEmail()).append("</h2>");
+        htmlMsg.append("<p>Congratulations on creating a new Forum successfully!!").append(".</p>");
+        htmlMsg.append("<p>You may wish to view your Forum at the link provided below:</p>");
+        String forumCreated = String.format(forumCreatedURI, forum.getId(), access.getEmail());
+        htmlMsg.append("<a href=\"").append(webURI).append(forumCreated).append("\">")
+                .append(webURI).append(forumCreated)
+                .append("</a>");
+        //htmlMsg.append("<p>"+accessCreate+"</p>");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.org Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(access.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("Forum Created");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendSurveyCreatedEmail(Access access, Survey survey) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(access.getEmail()).append("</h2>");
+        htmlMsg.append("<p>Congratulations on creating a new Survey successfully!!").append(".</p>");
+        htmlMsg.append("<p>You may wish to view your Survey at the link provided below:</p>");
+        String surveyCreated = String.format(surveyCreatedURI, survey.getId(), access.getEmail());
+        htmlMsg.append("<a href=\"").append(webURI).append(surveyCreated).append("\">")
+                .append(webURI).append(surveyCreated)
+                .append("</a>");
+        //htmlMsg.append("<p>"+accessCreate+"</p>");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.in Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(access.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("Survey Created");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendSurveyCreatedFromForumEmail(Access access, SurveyFromForum surveyFromForum) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(access.getEmail()).append("</h2>");
+        htmlMsg.append("<p>Congratulations on creating a new Survey From Forum successfully!!").append(".</p>");
+        htmlMsg.append("<p>You may wish to view your Survey From Forum at the link provided below:</p>");
+        String surveyCreated = String.format(surveyCreatedFromForumURI, surveyFromForum.getId(), access.getEmail());
+        htmlMsg.append("<a href=\"").append(webURI).append(surveyCreated).append("\">")
+                .append(webURI).append(surveyCreated)
+                .append("</a>");
+        //htmlMsg.append("<p>"+accessCreate+"</p>");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.in Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(access.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("Survey From Forum Created");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendPasswordChangedEmail(Access access) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(access.getEmail()).append("</h2>");
+        htmlMsg.append("<p>You have successfully changed your password.");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.in Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(access.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("Password changed");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendUserStateChangedEmail(User user) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(user.getEmail()).append("</h2>");
+        htmlMsg.append("<p>You have successfully changed your State to ").append(user.getStateName()).append(".</p>");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.org Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("State of residence changed");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
+            LOGGER.severe(ex.getMessage());
+        }
+    }
+
+    @Override
+    public void sendUserPersonalDetailsChangedEmail(User user) {
+        MimeMessage mimeMessage = new MimeMessage(session);
+        Multipart multipart = new MimeMultipart();
+        StringBuilder htmlMsg = new StringBuilder("<html><body>");
+        htmlMsg.append("<h2>Dear, ").append(user.getEmail()).append("</h2>");
+        htmlMsg.append("<p>You have successfully changed your Peronal Details.").append(".</p>");
+        htmlMsg.append("<p>Best Wishes, <br/>www.bjmanch.org Admin</p>");
+        htmlMsg.append("</body></html>");
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        try {
+            htmlPart.setContent(htmlMsg.toString(), "text/html; charset=utf-8");
+            multipart.addBodyPart(htmlPart);
+            mimeMessage.setFrom(new InternetAddress(session.getProperty("mail.smtp.user")));
+            mimeMessage.setRecipient(Message.RecipientType.TO, new InternetAddress(user.getEmail()));
+            mimeMessage.setContent(multipart);
+            mimeMessage.setSubject("Personal details changed");
+            Transport.send(mimeMessage);
+            LOGGER.info("Sent message successfully....");
+        } catch (MessagingException ex) {
             LOGGER.severe(ex.getMessage());
         }
     }

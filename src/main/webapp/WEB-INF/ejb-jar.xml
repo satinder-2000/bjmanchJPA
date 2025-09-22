@@ -7,8 +7,8 @@
     <enterprise-beans>
         <session>
             <display-name>EmailServiceEjb</display-name>
-            <ejb-name>BjManchEmailEjb</ejb-name>
-            <ejb-class>org.bjm.ejbs.BjManchEmailEjb</ejb-class>
+            <ejb-name>EmailServiceEjb</ejb-name>
+            <ejb-class>org.bjm.ejbs.EmailServiceEjb</ejb-class>
             <env-entry>
                 <env-entry-name>mailSMTPHost</env-entry-name>
                 <env-entry-type>java.lang.String</env-entry-type>
@@ -80,6 +80,17 @@
                 <env-entry-value>passwordReset.xhtml</env-entry-value>
             </env-entry>
         </session>
+        
+        <session>
+            <display-name>ActivityServiceEjb</display-name>
+            <ejb-name>ActivityServiceEjb</ejb-name>
+            <ejb-class>org.bjm.ejbs.ActivityServiceEjb</ejb-class>
+            <env-entry>
+                <env-entry-name>zoneId</env-entry-name>
+                <env-entry-type>java.lang.String</env-entry-type>
+                <env-entry-value>Asia/Kolkata</env-entry-value>
+            </env-entry>
+        </session>    
     </enterprise-beans>
 
 </ejb-jar>

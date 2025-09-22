@@ -15,6 +15,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -30,7 +31,10 @@ import java.util.Date;
     @NamedQuery(name = "Activity.findByCreatedOn", query = "SELECT a FROM Activity a WHERE a.createdOn = :createdOn"),
     @NamedQuery(name = "Activity.findByActivityType", query = "SELECT a FROM Activity a WHERE a.activityType = :activityType"),
     @NamedQuery(name = "Activity.findByDescription", query = "SELECT a FROM Activity a WHERE a.description = :description"),
-    @NamedQuery(name = "Activity.findByOwnerEmail", query = "SELECT a FROM Activity a WHERE a.ownerEmail = :ownerEmail")})
+    @NamedQuery(name = "Activity.findByOwnerEmail", query = "SELECT a FROM Activity a WHERE a.ownerEmail = :ownerEmail"),
+    @NamedQuery(name = "Activity.findLastN", query = "SELECT a FROM Activity a ORDER BY a.id DESC LIMIT :size")
+})
+
 public class Activity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -43,12 +47,15 @@ public class Activity implements Serializable {
     @NotNull
     @Column(name = "createdOn")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date createdOn;
+    private Timestamp createdOn;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 25)
     @Column(name = "activityType")
     private String activityType;
+    @NotNull
+    @Column(name = "activityId")
+    private int activityId;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 150)
@@ -67,10 +74,11 @@ public class Activity implements Serializable {
         this.id = id;
     }
 
-    public Activity(Integer id, Date createdOn, String activityType, String description, String ownerEmail) {
+    public Activity(Integer id, Timestamp createdOn, String activityType, int activityId, String description, String ownerEmail) {
         this.id = id;
         this.createdOn = createdOn;
         this.activityType = activityType;
+        this.activityId=activityId;
         this.description = description;
         this.ownerEmail = ownerEmail;
     }
@@ -83,13 +91,23 @@ public class Activity implements Serializable {
         this.id = id;
     }
 
-    public Date getCreatedOn() {
+    public Timestamp getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(Timestamp createdOn) {
         this.createdOn = createdOn;
     }
+
+    public int getActivityId() {
+        return activityId;
+    }
+
+    public void setActivityId(int activityId) {
+        this.activityId = activityId;
+    }
+
+    
 
     public String getActivityType() {
         return activityType;

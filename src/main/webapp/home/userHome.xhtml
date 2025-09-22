@@ -110,14 +110,14 @@
                                     <br/>
                                     <h5 class="w3-margin-left">My Blogs</h5>
                                     <c:choose>
-                                        <c:when test="#{homeMBean.blogs.size()>0}">
+                                        <c:when test="#{homeMBean.userBlogs.size()>0}">
                                             <table class="w3-table w3-striped">
                                                 <tr>
                                                     <th>Blog Title</th>
                                                     <th>Date Created</th>
                                                     <th>Details</th>
                                                 </tr>
-                                                <c:forEach items="#{homeMBean.blogs}" var="blog">
+                                                <c:forEach items="#{homeMBean.userBlogs}" var="blog">
                                                     <tr>
                                                         <td><h:outputText value="#{blog.title}" /></td>
                                                         <td><h:outputText value="#{blog.publishedOn.dayOfMonth}" />

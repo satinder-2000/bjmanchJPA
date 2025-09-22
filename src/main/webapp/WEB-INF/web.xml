@@ -1,11 +1,93 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
-   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
-   version="5.0">
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_5_0.xsd"
+         version="5.0">
+    <context-param>
+        <param-name>jakarta.faces.PROJECT_STAGE</param-name>
+        <param-value>Production</param-value>
+    </context-param>
+    <context-param>
+        <param-name>zoneId</param-name>
+        <param-value>Asia/Kolkata</param-value>
+    </context-param>
+    <context-param>
+        <param-name>imageSize</param-name>
+        <param-value>150</param-value>
+    </context-param>
+    <context-param>
+        <param-name>imageFormat</param-name>
+        <param-value>png</param-value>
+    </context-param>
+    <context-param>
+        <param-name>activityListSize</param-name>
+        <param-value>15</param-value>
+    </context-param>
+    <context-param>
+        <param-name>descriptionLimit</param-name>
+        <param-value>5000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>commentLimit</param-name>
+        <param-value>2500</param-value>
+    </context-param>
+    <context-param>
+        <param-name>reportAbuseLimit</param-name>
+        <param-value>2500</param-value>
+    </context-param>
+    <context-param>
+        <param-name>adminEmail</param-name>
+        <param-value>admin@bjmanch.org</param-value>
+    </context-param>
+    <context-param>
+        <param-name>contactEmail</param-name>
+        <param-value>contact@bjmanch.org</param-value>
+    </context-param>
+    <!-- Email Session params -->
+    <context-param>
+        <param-name>mailSMTPHost</param-name>
+        <param-value>smtp.livemail.co.uk</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mailSMTPPort</param-name>
+        <param-value>587</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mailSMTPAuth</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>smtpStartTlsEnabled</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <context-param>
+        <param-name>mailSMTPUser</param-name>
+        <param-value>contact@bjmanch.org</param-value>
+    </context-param>
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>Wether@lDr69</param-value>
+    </context-param>
+    <context-param>
+        <param-name>createAccessURI</param-name>
+        <param-value>createAccess.xhtml?email=%s</param-value>
+    </context-param>
+    
+    <servlet>
+        <servlet-name>Faces Servlet</servlet-name>
+        <servlet-class>jakarta.faces.webapp.FacesServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Faces Servlet</servlet-name>
+        <url-pattern>*.xhtml</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
+    <welcome-file-list>
+        <welcome-file>index.xhtml</welcome-file>
+    </welcome-file-list>
 </web-app>
