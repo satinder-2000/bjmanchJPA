@@ -3,22 +3,22 @@ package org.bjm.ejbs;
 import jakarta.annotation.PostConstruct;
 import jakarta.ejb.Singleton;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NamedQuery;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Logger;
 import org.bjm.entities.ForumCategory;
 import org.bjm.entities.LokSabha;
+import org.bjm.entities.LokSabhaNominate;
 import org.bjm.entities.State;
 import org.bjm.entities.SurveyCategory;
 import org.bjm.entities.VidhanSabha;
+import org.bjm.entities.VidhanSabhaNominate;
 
 /**
  *
@@ -156,6 +156,42 @@ public class ReferenceDataServiceEjb implements ReferenceDataServiceEjbLocal {
     @Override
     public List<VidhanSabha> getVidhanSabhasForState(String code) {
         return vidhanSabhaMap.get(code);
+    }
+
+    @Override
+    public State findStateByName(String name) {
+        Query query = em.createNamedQuery("State.findByName", State.class);
+        query.setParameter(1, name);
+        return (State) query.getSingleResult();
+    }
+
+    @Override
+    public List<LokSabhaNominate> getLokSabhaNominationsForConstituency(String stateCode, String constituency) {
+        Query query = em.createNamedQuery("LokSabhaNominate.findForStateCodeAndConstituency", LokSabhaNominate.class);
+        query.setParameter(1, stateCode);
+        query.setParameter(2, constituency);
+        List<LokSabhaNominate> toReturn = query.getResultList();
+        LOGGER.info(String.format("Found %d Nominations for StateCode %s and LokSabha Constituency %s",toReturn.size(), stateCode, constituency));
+        return toReturn;
+                
+    }
+
+    @Override
+    public LokSabhaNominate findByLSNominatedCandidate(String stateCode, String candidateName) {
+        Query query = em.createNamedQuery("LokSabhaNominate.findByCandidateName", LokSabhaNominate.class);
+        query.setParameter(1, stateCode);
+        query.setParameter(2, candidateName);
+        return (LokSabhaNominate)query.getSingleResult();
+    }
+
+    @Override
+    public List<VidhanSabhaNominate> getVidhanSabhaNominationsForConstituency(String stateCode, String constituency) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public VidhanSabhaNominate findByVSNominatedCandidate(String stateCode, String candidateName) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     

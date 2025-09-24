@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SurverVote.findAllForSurvey", query = "SELECT sv FROM SurverVote sv WHERE sv.surveyId = :surveyId ORDER BY sv.id")
+    @NamedQuery(name = "SurverVote.findAllForSurvey", query = "SELECT sv FROM SurveyVote sv WHERE sv.surveyId = :surveyId ORDER BY sv.id"),
+    @NamedQuery(name="SurveyVote.findById", query = "SELECT SurveyVote sv FROM SurveyVote sv WHERE sv.id = :id")
 })
 public class SurveyVote {
     

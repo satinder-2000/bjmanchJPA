@@ -15,7 +15,10 @@ import java.sql.Timestamp;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Blog.findByEmail", query = "SELECT b FROM Blog b WHERE b.publishedByEmail = :email")
+    @NamedQuery(name = "Blog.findByBlogId", query = "SELECT b FROM Blog b WHERE b.id = :id"),
+    @NamedQuery(name = "Blog.findByUserId", query = "SELECT b FROM Blog b WHERE b.publishedByAccessId = :accessId"),
+    @NamedQuery(name = "Blog.findByEmail", query = "SELECT b FROM Blog b WHERE b.publishedByEmail = :email"),
+    @NamedQuery(name = "Blog.findNBlogs", query = "SELECT b FROM Blog b ORDER BY id DESC LIMIT :count")
 })
 public class Blog {
     

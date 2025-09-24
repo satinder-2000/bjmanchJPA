@@ -40,8 +40,8 @@ import java.sql.Date;
     @NamedQuery(name = "User.findByMobile", query = "SELECT u FROM User u WHERE u.mobile = :mobile"),
     @NamedQuery(name = "User.findByPhone", query = "SELECT u FROM User u WHERE u.phone = :phone"),
     @NamedQuery(name = "User.findByStateName", query = "SELECT u FROM User u WHERE u.stateName = :stateName"),
-    @NamedQuery(name = "User.findByLokSabha", query = "SELECT u FROM User u WHERE u.lokSabha = :lokSabha"),
-    @NamedQuery(name = "User.findByVidhanSabha", query = "SELECT u FROM User u WHERE u.vidhanSabha = :vidhanSabha"),
+    @NamedQuery(name = "User.findByLokSabhaConstituency", query = "SELECT u FROM User u WHERE u.lokSabhaConstituency = :lokSabhaConstituency"),
+    @NamedQuery(name = "User.findByVidhanSabhaConstituency", query = "SELECT u FROM User u WHERE u.vidhanSabhaConstituency = :vidhanSabhaConstituency"),
     @NamedQuery(name = "User.findByCreatedOn", query = "SELECT u FROM User u WHERE u.createdOn = :createdOn"),
     @NamedQuery(name = "User.findByUpdatedOn", query = "SELECT u FROM User u WHERE u.updatedOn = :updatedOn")})
 public class User implements Serializable {
@@ -95,11 +95,11 @@ public class User implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 100)
-    @Column(name = "lokSabha")
-    private String lokSabha;
+    @Column(name = "lokSabhaConstituency")
+    private String lokSabhaConstituency;
     @Size(max = 100)
-    @Column(name = "vidhanSabha")
-    private String vidhanSabha;
+    @Column(name = "vidhanSabhaConstituency")
+    private String vidhanSabhaConstituency;
     @Basic(optional = false)
     @NotNull
     @Column(name = "createdOn")
@@ -127,7 +127,7 @@ public class User implements Serializable {
         this.dob = dob;
         this.mobile = mobile;
         this.stateName = stateName;
-        this.lokSabha = lokSabha;
+        this.lokSabhaConstituency = lokSabha;
         this.createdOn = createdOn;
         this.updatedOn = updatedOn;
     }
@@ -204,20 +204,20 @@ public class User implements Serializable {
         this.stateName = stateName;
     }
 
-    public String getLokSabha() {
-        return lokSabha;
+    public String getLokSabhaConstituency() {
+        return lokSabhaConstituency;
     }
 
-    public void setLokSabha(String lokSabha) {
-        this.lokSabha = lokSabha;
+    public void setLokSabhaConstituency(String lokSabhaConstituency) {
+        this.lokSabhaConstituency = lokSabhaConstituency;
     }
 
-    public String getVidhanSabha() {
-        return vidhanSabha;
+    public String getVidhanSabhaConstituency() {
+        return vidhanSabhaConstituency;
     }
 
-    public void setVidhanSabha(String vidhanSabha) {
-        this.vidhanSabha = vidhanSabha;
+    public void setVidhanSabhaConstituency(String vidhanSabhaConstituency) {
+        this.vidhanSabhaConstituency = vidhanSabhaConstituency;
     }
 
     public Timestamp getCreatedOn() {

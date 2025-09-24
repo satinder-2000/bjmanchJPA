@@ -71,8 +71,8 @@ public class ManageAccountMBean implements Serializable {
         userDto.setMobile(user.getMobile());
         userDto.setPhone(user.getPhone());
         userDto.setStateName(user.getStateName());
-        userDto.setLokSabha(user.getLokSabha());
-        userDto.setVidhanSabha(user.getVidhanSabha());
+        userDto.setLokSabha(user.getLokSabhaConstituency());
+        userDto.setVidhanSabha(user.getVidhanSabhaConstituency());
     }
     
     public String changePasswordReq(){
@@ -169,8 +169,8 @@ public class ManageAccountMBean implements Serializable {
                 break;
             }
         }
-        user.setLokSabha(userDto.getLokSabha());
-        user.setVidhanSabha(userDto.getVidhanSabha());
+        user.setLokSabhaConstituency(userDto.getLokSabha());
+        user.setVidhanSabhaConstituency(userDto.getVidhanSabha());
         userServiceEjbLocal.changeUserState(user);
         FacesContext.getCurrentInstance().addMessage("state", new FacesMessage(FacesMessage.SEVERITY_INFO, "State details changed successfully","State details changed successfully"));
         return null;

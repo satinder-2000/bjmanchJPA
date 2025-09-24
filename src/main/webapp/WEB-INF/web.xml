@@ -72,6 +72,11 @@
         <param-name>createAccessURI</param-name>
         <param-value>createAccess.xhtml?email=%s</param-value>
     </context-param>
+    <context-param>
+        <param-name>recordCount</param-name>
+        <param-value>15</param-value>
+    </context-param>
+
     
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>

@@ -16,7 +16,8 @@ import java.sql.Timestamp;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "SurveyFromForumVote.findAllForSurvey", query = "SELECT sv FROM SurveyFromForumVote sv WHERE sv.surveyId = :surveyId ORDER BY sv.id")
+    @NamedQuery(name = "SurveyFromForumVote.findAllForSurvey", query = "SELECT sv FROM SurveyFromForumVote sv WHERE sv.surveyId = :surveyId ORDER BY sv.id"),
+    @NamedQuery(name="SurveyFromForumVote.findById", query = "SELECT SurveyFromForumVote sfv FROM SurveyFromForumVote sfv WHERE sfv.id = :id")    
 })
 public class SurveyFromForumVote implements Serializable {
 

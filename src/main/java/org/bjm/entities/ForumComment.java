@@ -16,7 +16,8 @@ import java.time.LocalDateTime;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "ForumComment.findAllForForum", query = "SELECT fc FROM ForumComment fc WHERE fc.forumId = :forumId ORDER BY fc.id")
+    @NamedQuery(name = "ForumComment.findAllForForum", query = "SELECT fc FROM ForumComment fc WHERE fc.forumId = :forumId ORDER BY fc.id"),
+    @NamedQuery(name="ForumComment.findById", query = "SELECT ForumComment fc FROM ForumComment fc WHERE fc.id = :id")
 })
 public class ForumComment {
     
